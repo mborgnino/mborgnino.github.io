@@ -5,7 +5,10 @@
 </head>
 
 <body>
+    <br>
     Calcolo del Bilancio Idrico (valori in cc)
+    <br>
+    <br>
     <input type="radio" name="gender" id="gend_male" value="male"> Male
     <input type="radio" name="gender" id="gend_female" value="female"> Female
     <br>
@@ -55,12 +58,15 @@
         <br>
         Temperatura Corporea: <input type="text" id="temp">
         <br>
+        <br>
+        <input type="button" value="CALCOLA" onclick="sumValues()">
+        <br>
+        <br>
 
         INGESTA: <input type="text" id="ingesta">
         ESCRETA: <input type="text" id="escreta">
         BILANCIO: <input type="text" id="bilancio">
-        <br>
-        <input type="button" value="Calcola" onclick="sumValues()">
+
     </form>
     <script type="text/javascript">
         document.getElementById("ipercatabol").onchange = function() {
