@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bilancio Idrico</title>
+</head>
+
+<body>
+    <input type="radio" name="gender" id="gend_male" value="male"> Male
+    <input type="radio" name="gender" id="gend_female" value="female"> Female
+    <br>
+    <form name="calcola_bilancio">
+        Acqua Alimenti: <input type="text" id="alimenti">
+        Acqua Bevande: <input type="text" id="bevande">
+        <br>
+        Acqua Vena (parenterale): <input type="text" id="vena">
+        Acqua Sonda (enterale): <input type="text" id="sonda">
+        <br>
+        Acqua Metabolica:
+        <input type="radio" name="metabolica" id="fisio_cond"> Condizioni Fisiologiche
+        <input type="radio" name="metabolica" id="digiuno_cond"> Digiuno
+        <br>
+        Ipercatabolismo <input type="checkbox" id="ipercatabol">
+        <input type="text" id="iper_val" placeholder="cc.230-250" disabled>
+        <br>
+        Sacche emazia concentrate <input type="checkbox" id="sacche">
+        <br>
+        Piastrine: <input type="text" id="piastrine" placeholder="cc.150-250 (secondo volume sacca)" size="35">
+        Plasma: <input type="text" id="plasma" placeholder="cc.250-500 (a giudizio medico)" size="30">
+        <br>
+
+        Diuresi: <input type="text" id="diuresi">
+        <br>
+        Alvo:
+        <input type="radio" name="alvo" id="alvo_regolare"> Regolare
+        <input type="text" id="alvo_val1" placeholder="cc.100-150">
+        <input type="radio" name="alvo" id="diarrea"> Diarrea
+        <input type="text" id="alvo_val2" placeholder="dosaggio feci 24h">
+        <br>
+        Perspiratio Polmoni:
+        <select id="polmoni">
+            <option value="" disabled selected>Respiri/minuto</option>
+            <option value="400">16 respiri/min (cond. fisiologica)</option>
+            <option value="800">22 respiri/min</option>
+            <option value="1200">28 respiri/min</option>
+            <option value="1600">34 respiri/min</option>
+            <option value="2000">40 respiri/min</option>
+        </select>
+        <br>
+        Perspiratio Cute:
+        <input type="radio" name="persp_cute" id="fisio_cute"> Condizioni Fisiologiche
+        <input type="radio" name="persp_cute" id="sudorazione"> Eccesso Sudorazione
+        <br>
+        Tracheostomia o Polipnea <input type="checkbox" id="tracheo_polip">
+        <br>
+        Temperatura Corporea: <input type="text" id="temp">
+        <br>
+
+        INGESTA: <input type="text" id="ingesta">
+        ESCRETA: <input type="text" id="escreta">
+        BILANCIO: <input type="text" id="bilancio">
+        <br>
+        <input type="button" value="Calcola" onclick="sumValues()">
+    </form>
+    <script type="text/javascript">
+        document.getElementById("ipercatabol").onchange = function() {
+            document.getElementById("iper_val").disabled = !this.checked;
+        };
+
+        function sumValues() {
+
+            var n1 = parseInt(document.getElementById('alimenti').value);
+            var n2 = parseInt(document.getElementById('bevande').value);
+            var n3 = parseInt(document.getElementById('vena').value);
+            var n4 = parseInt(document.getElementById('sonda').value);
+
+            if (document.getElementById('fisio_cond').checked) {
+                var n5 = 300;
+            } else if (document.getElementById('digiuno_cond').checked) {
+                var n5 = 460;
+            }
+            if (document.getElementById('ipercatabol').checked) {
+                var n6 = parseInt(document.getElementById('iper_val').value);
+            } else {
+                var n6 = 0;
+            }
+            if (document.getElementById('sacche').checked) {
+                var n7 = 100;
+            } else {
+                var n7 = 0;
+            }
+            var n8 = parseInt(document.getElementById('piastrine').value);
+            var n9 = parseInt(document.getElementById('plasma').value);
+
+
+            var n10 = parseInt(document.getElementById('diuresi').value);
+
+            if (document.getElementById('alvo_regolare').checked) {
+                var n11 = parseInt(document.getElementById('alvo_val1').value);
+            } else if (document.getElementById('diarrea').checked) {
+                var n11 = parseInt(document.getElementById('alvo_val2').value);
+            }
+            var n12 = parseInt(document.getElementById('polmoni').value);
+
+            if (document.getElementById('fisio_cute').checked) {
+                if (document.getElementById('gend_male').checked) {
+                    var n13 = 600;
+                } else if (document.getElementById('gend_female').checked) {
+                    var n13 = 400;
+                }
+            } else if (document.getElementById('sudorazione').checked) {
+                var n13 = 300;
+            }
+
+            var T = parseInt(document.getElementById('temp').value);
+            if (document.getElementById('gend_male').checked) {
+                var n14 = 150 * (T - 36)
+            } else if (document.getElementById('gend_female').checked) {
+                var n14 = 100 * (T - 36)
+            }
+
+            if (document.getElementById('tracheo_polip').checked) {
+                var n15 = 1000;
+            } else {
+                var n15 = 0;
+            }
+
+            var nin = document.getElementById('ingesta').value = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9;
+            var nout = document.getElementById('escreta').value = n10 + n11 + n12 + n13 + n14 + n15;
+            var ntot = document.getElementById('bilancio').value = nin - nout;
+
+        }
+    </script>
+</body>
+</html>
